@@ -1,19 +1,58 @@
 document.addEventListener('DOMContentLoaded', function () {
-  // Array of school holiday dates (format: 'Month Day, Year')
+  // Mapping of Croatian month names to their numeric values
+  var croatianMonths = {
+    'Siječnja': 0,
+    'Veljače': 1,
+    'Ožujka': 2,
+    'Travnja': 3,
+    'Svibnja': 4,
+    'Lipnja': 5,
+    'Srpnja': 6,
+    'Kolovoza': 7,
+    'Rujna': 8,
+    'Listopada': 9,
+    'Studenog': 10,
+    'Prosinca': 11
+  };
+
+  // Array of school holiday dates (format: 'Day Month Year' in Croatian)
   var holidayDates = [
-    { start: 'February 10, 2024', end: 'February 15, 2024' },
-    { start: 'April 1, 2024', end: 'April 7, 2024' },
-    { start: 'June 15, 2024', end: 'June 20, 2024' },
-    { start: 'December 25, 2024', end: 'December 31, 2024' }
+    { start: '10. Veljače 2024', end: '15. Veljače 2024' },
+    { start: '1. Travnja 2024', end: '7. Travnja 2024' },
+    { start: '15. Lipnja 2024', end: '20. Lipnja 2024' },
+    { start: '25. Prosinca 2024', end: '31. Prosinca 2024' }
   ];
 
-  var additionalDateRange = { start: 'January 2, 2024', end: 'January 7, 2024' };
+  var additionalDateRange = { start: '2. Siječnja 2024', end: '7. Siječnja 2024' };
 
   var countdownContainer = document.getElementById('countdown-container');
+  var header = document.createElement('h1');
+  header.textContent = '2023/2024 Školska godina Countdown Timer';
+  countdownContainer.appendChild(header);
+
+  var themeSwitcher = document.getElementById('theme-switcher');
+  var themeStyle = document.getElementById('theme-style');
+
+  themeSwitcher.addEventListener('click', function () {
+    if (themeStyle.getAttribute('href') === 'styles.css') {
+      themeStyle.setAttribute('href', 'dark-theme.css');
+    } else {
+      themeStyle.setAttribute('href', 'styles.css');
+    }
+  });
 
   function updateCountdowns() {
     // Clear the existing content in the container
     countdownContainer.innerHTML = '';
+
+    // Function to convert Croatian date string to a JavaScript Date object
+    function convertCroatianDate(dateString) {
+      var parts = dateString.split(' ');
+      var day = parseInt(parts[0], 10);
+      var month = croatianMonths[parts[1]];
+      var year = parseInt(parts[2], 10);
+      return new Date(year, month, day);
+    }
 
     // Function to calculate time remaining
     function calculateTimeRemaining(startDate, endDate) {
@@ -31,30 +70,35 @@ document.addEventListener('DOMContentLoaded', function () {
       countdownElement.classList.add('countdown-item');
 
       if (timeRemaining <= 0) {
-        countdownElement.innerHTML = 'Enjoy the holiday!';
+        countdownElement.innerHTML = 'Uživajte u praznicima!';
       } else {
-        var startDate = new Date(date.start);
-        var endDate = new Date(date.end);
+        var startDate = convertCroatianDate(date.start);
+        var endDate = convertCroatianDate(date.end);
 
-        countdownElement.innerHTML = '<strong>' + date.start + ' to ' + date.end + '</strong>: ' +
-          'From ' + startDate.toLocaleDateString() + ' to ' + endDate.toLocaleDateString() +
+        countdownElement.innerHTML = '<strong>' + date.start + ' do ' + date.end + '</strong>: ' +
+          'Od ' + startDate.toLocaleDateString('hr-HR') + ' do ' + endDate.toLocaleDateString('hr-HR') +
           ', ' + timeRemaining.days + 'd ' + timeRemaining.hours + 'h ' + timeRemaining.minutes + 'm ' + timeRemaining.seconds + 's';
       }
 
       countdownContainer.appendChild(countdownElement);
     }
 
+    // Sort holidayDates array based on the start date (ascending order)
+    holidayDates.sort(function (a, b) {
+      return convertCroatianDate(a.start) - convertCroatianDate(b.start);
+    });
+
     // Update countdowns for school holidays
     holidayDates.forEach(function (date) {
-      var startDate = new Date(date.start);
-      var endDate = new Date(date.end);
+      var startDate = convertCroatianDate(date.start);
+      var endDate = convertCroatianDate(date.end);
       var timeRemaining = calculateTimeRemaining(new Date(), endDate);
       createCountdownElement(date, timeRemaining);
     });
 
     // Update countdown for additional date range
-    var additionalStartDate = new Date(additionalDateRange.start);
-    var additionalEndDate = new Date(additionalDateRange.end);
+    var additionalStartDate = convertCroatianDate(additionalDateRange.start);
+    var additionalEndDate = convertCroatianDate(additionalDateRange.end);
     var additionalTimeRemaining = calculateTimeRemaining(new Date(), additionalEndDate);
     createCountdownElement(additionalDateRange, additionalTimeRemaining);
   }
@@ -65,4 +109,3 @@ document.addEventListener('DOMContentLoaded', function () {
   // Initial countdown update
   updateCountdowns();
 });
-
