@@ -1,17 +1,21 @@
 document.addEventListener('DOMContentLoaded', function () {
-  // Set the target date for the countdown (format: 'Month Day, Year')
-  var targetDate = new Date('January 1, 2025').getTime();
+  // Array of school holiday dates (format: 'Month Day, Year')
+  var holidayDates = [
+    'February 10, 2024',
+    'April 1, 2024',
+    'June 15, 2024',
+    'December 25, 2024'
+  ];
 
   var countdownElement = document.getElementById('countdown');
 
-  // Update the countdown every second
-  var countdownInterval = setInterval(function () {
+  function updateCountdown() {
     var currentDate = new Date().getTime();
-    var timeRemaining = targetDate - currentDate;
+    var nextHolidayDate = new Date(findNextHoliday()).getTime();
+    var timeRemaining = nextHolidayDate - currentDate;
 
     if (timeRemaining <= 0) {
-      clearInterval(countdownInterval);
-      countdownElement.innerHTML = 'Happy New Year!';
+      countdownElement.innerHTML = 'Enjoy the holiday!';
     } else {
       var days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
       var hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -20,6 +24,30 @@ document.addEventListener('DOMContentLoaded', function () {
 
       countdownElement.innerHTML = days + 'd ' + hours + 'h ' + minutes + 'm ' + seconds + 's';
     }
-  }, 1000);
+  }
+
+  function findNextHoliday() {
+    var currentDate = new Date().getTime();
+    var sortedHolidays = holidayDates.map(function (date) {
+      return new Date(date).getTime();
+    }).sort(function (a, b) {
+      return a - b;
+    });
+
+    for (var i = 0; i < sortedHolidays.length; i++) {
+      if (sortedHolidays[i] > currentDate) {
+        return new Date(sortedHolidays[i]);
+      }
+    }
+
+    // If no future holidays are found, return the first holiday in the list
+    return new Date(sortedHolidays[0]);
+  }
+
+  // Update the countdown every second
+  var countdownInterval = setInterval(updateCountdown, 1000);
+
+  // Initial countdown update
+  updateCountdown();
 });
 
