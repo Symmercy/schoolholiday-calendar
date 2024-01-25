@@ -1,6 +1,7 @@
 body {
   font-family: 'Arial', sans-serif;
-  background-color: #f4f4f4;
+  background-color: #1a1a1a;
+  color: #fff;
   margin: 0;
   padding: 0;
   display: flex;
@@ -13,8 +14,28 @@ body {
   text-align: center;
 }
 
-#countdown {
-  font-size: 2em;
-  margin-top: 20px;
+.countdown-item {
+  background-color: #3498db;
+  color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 10px;
+  display: inline-block;
 }
 
+#countdown-container strong {
+  color: #161718;
+}
+
+#countdown-container p {
+  margin: 5px 0;
+}
+
+/* Additional styles to ensure proper sizing of the countdown items */
+.countdown-item strong {
+  font-size: 1.2em;
+}
+
+.countdown-item p {
+  font-size: 1em;
+}

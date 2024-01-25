@@ -1,53 +1,68 @@
 document.addEventListener('DOMContentLoaded', function () {
   // Array of school holiday dates (format: 'Month Day, Year')
   var holidayDates = [
-    'February 10, 2024',
-    'April 1, 2024',
-    'June 15, 2024',
-    'December 25, 2024'
+    { start: 'February 10, 2024', end: 'February 15, 2024' },
+    { start: 'April 1, 2024', end: 'April 7, 2024' },
+    { start: 'June 15, 2024', end: 'June 20, 2024' },
+    { start: 'December 25, 2024', end: 'December 31, 2024' }
   ];
 
-  var countdownElement = document.getElementById('countdown');
+  var additionalDateRange = { start: 'January 2, 2024', end: 'January 7, 2024' };
 
-  function updateCountdown() {
-    var currentDate = new Date().getTime();
-    var nextHolidayDate = new Date(findNextHoliday()).getTime();
-    var timeRemaining = nextHolidayDate - currentDate;
+  var countdownContainer = document.getElementById('countdown-container');
 
-    if (timeRemaining <= 0) {
-      countdownElement.innerHTML = 'Enjoy the holiday!';
-    } else {
+  function updateCountdowns() {
+    // Clear the existing content in the container
+    countdownContainer.innerHTML = '';
+
+    // Function to calculate time remaining
+    function calculateTimeRemaining(startDate, endDate) {
+      var timeRemaining = endDate - startDate;
       var days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
       var hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       var minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
       var seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-
-      countdownElement.innerHTML = days + 'd ' + hours + 'h ' + minutes + 'm ' + seconds + 's';
+      return { days, hours, minutes, seconds };
     }
-  }
 
-  function findNextHoliday() {
-    var currentDate = new Date().getTime();
-    var sortedHolidays = holidayDates.map(function (date) {
-      return new Date(date).getTime();
-    }).sort(function (a, b) {
-      return a - b;
+    // Function to create countdown element
+    function createCountdownElement(date, timeRemaining) {
+      var countdownElement = document.createElement('div');
+      countdownElement.classList.add('countdown-item');
+
+      if (timeRemaining <= 0) {
+        countdownElement.innerHTML = 'Enjoy the holiday!';
+      } else {
+        var startDate = new Date(date.start);
+        var endDate = new Date(date.end);
+
+        countdownElement.innerHTML = '<strong>' + date.start + ' to ' + date.end + '</strong>: ' +
+          'From ' + startDate.toLocaleDateString() + ' to ' + endDate.toLocaleDateString() +
+          ', ' + timeRemaining.days + 'd ' + timeRemaining.hours + 'h ' + timeRemaining.minutes + 'm ' + timeRemaining.seconds + 's';
+      }
+
+      countdownContainer.appendChild(countdownElement);
+    }
+
+    // Update countdowns for school holidays
+    holidayDates.forEach(function (date) {
+      var startDate = new Date(date.start);
+      var endDate = new Date(date.end);
+      var timeRemaining = calculateTimeRemaining(new Date(), endDate);
+      createCountdownElement(date, timeRemaining);
     });
 
-    for (var i = 0; i < sortedHolidays.length; i++) {
-      if (sortedHolidays[i] > currentDate) {
-        return new Date(sortedHolidays[i]);
-      }
-    }
-
-    // If no future holidays are found, return the first holiday in the list
-    return new Date(sortedHolidays[0]);
+    // Update countdown for additional date range
+    var additionalStartDate = new Date(additionalDateRange.start);
+    var additionalEndDate = new Date(additionalDateRange.end);
+    var additionalTimeRemaining = calculateTimeRemaining(new Date(), additionalEndDate);
+    createCountdownElement(additionalDateRange, additionalTimeRemaining);
   }
 
-  // Update the countdown every second
-  var countdownInterval = setInterval(updateCountdown, 1000);
+  // Update the countdowns every second
+  setInterval(updateCountdowns, 1000);
 
   // Initial countdown update
-  updateCountdown();
+  updateCountdowns();
 });
 
