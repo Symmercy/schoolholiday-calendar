@@ -17,13 +17,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Array of school holiday dates (format: 'Day Month Year' in Croatian)
   var holidayDates = [
-    { start: '10. Veljače 2024', end: '15. Veljače 2024' },
-    { start: '1. Travnja 2024', end: '7. Travnja 2024' },
-    { start: '15. Lipnja 2024', end: '20. Lipnja 2024' },
-    { start: '25. Prosinca 2024', end: '31. Prosinca 2024' }
+    { start: '19. Veljače 2024', end: '23. Veljače 2024' },
+    { start: '28. Ožujka 2024', end: '5. Travnja 2024' }
   ];
-
-  var additionalDateRange = { start: '2. Siječnja 2024', end: '7. Siječnja 2024' };
 
   var countdownContainer = document.getElementById('countdown-container');
   var header = document.createElement('h1');
