@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Function to calculate time remaining
     function calculateTimeRemaining(startDate, endDate) {
-      var timeRemaining = endDate - startDate;
+      var timeRemaining = startDate - endDate;
       var days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
       var hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       var minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
