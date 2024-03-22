@@ -52,7 +52,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Function to calculate time remaining
     function calculateTimeRemaining(startDate, endDate) {
-      var timeRemaining = endDate - startDate;
+      var timeRemaining;
+      if (startDate.getTime() < endDate.getTime()) {
+        // Calculate time remaining until the beginning of the holidays
+        timeRemaining = endDate.getTime() - startDate.getTime();
+      } else {
+        // Calculate time remaining until the end of the holidays (if start date is after end date)
+        timeRemaining = startDate.getTime() - endDate.getTime();
+      }
+      
       var days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
       var hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       var minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
@@ -88,15 +96,9 @@ document.addEventListener('DOMContentLoaded', function () {
     holidayDates.forEach(function (date) {
       var startDate = convertCroatianDate(date.start);
       var endDate = convertCroatianDate(date.end);
-      var timeRemaining = calculateTimeRemaining(new Date(), endDate);
+      var timeRemaining = calculateTimeRemaining(new Date(), startDate); // Changed to calculate until the beginning of holidays
       createCountdownElement(date, timeRemaining);
     });
-
-    // Update countdown for additional date range
-    var additionalStartDate = convertCroatianDate(additionalDateRange.start);
-    var additionalEndDate = convertCroatianDate(additionalDateRange.end);
-    var additionalTimeRemaining = calculateTimeRemaining(new Date(), additionalEndDate);
-    createCountdownElement(additionalDateRange, additionalTimeRemaining);
   }
 
   // Update the countdowns every second
