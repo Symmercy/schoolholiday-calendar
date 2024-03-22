@@ -52,23 +52,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Function to calculate time remaining
     function calculateTimeRemaining(startDate, endDate) {
-    var timeRemaining;
-    if (startDate.getTime() < endDate.getTime()) {
-      
-        // Calculate time remaining until the end of the holidays
+      var timeRemaining;
+      if (startDate.getTime() < endDate.getTime()) {
+        // Calculate time remaining until the beginning of the holidays
         timeRemaining = endDate.getTime() - startDate.getTime();
-    } else {
-        // Calculate time remaining until the end of the holidays in the next year
+      } else {
+        // Calculate time remaining until the beginning of the holidays in the next year
         endDate.setFullYear(endDate.getFullYear() + 1);
         timeRemaining = endDate.getTime() - startDate.getTime();
+      }
+      
+      var days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+      return { days, hours, minutes, seconds };
     }
-    
-    var days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-    var hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    var minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-    return { days, hours, minutes, seconds };
-}
 
     // Function to create countdown element
     function createCountdownElement(date, timeRemaining) {
@@ -96,9 +95,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Update countdowns for school holidays
     holidayDates.forEach(function (date) {
-      var startDate = convertCroatianDate(date.start);
-      var endDate = convertCroatianDate(date.end);
-      var timeRemaining = calculateTimeRemaining(new Date(), startDate); // Changed to calculate until the beginning of holidays
+      var startDate = new Date(); // Current date
+      var endDate = convertCroatianDate(date.start);
+      var timeRemaining = calculateTimeRemaining(startDate, endDate);
       createCountdownElement(date, timeRemaining);
     });
   }
@@ -109,3 +108,4 @@ document.addEventListener('DOMContentLoaded', function () {
   // Initial countdown update
   updateCountdowns();
 });
+
