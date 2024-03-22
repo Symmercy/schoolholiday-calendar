@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Array of school holiday dates (format: 'Day Month Year' in Croatian)
   var holidayDates = [
-    { start: '19. Veljače 2024', end: '23. Veljače 2024' },
     { start: '28. Ožujka 2024', end: '5. Travnja 2024' }
   ];
 
