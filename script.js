@@ -52,21 +52,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Function to calculate time remaining
     function calculateTimeRemaining(startDate, endDate) {
-      var timeRemaining;
-      if (startDate.getTime() < endDate.getTime()) {
-        // Calculate time remaining until the beginning of the holidays
-        timeRemaining = endDate.getTime() - startDate.getTime();
-      } else {
-        // Calculate time remaining until the end of the holidays (if start date is after end date)
-        timeRemaining = startDate.getTime() - endDate.getTime();
-      }
+    var timeRemaining;
+    if (startDate.getTime() < endDate.getTime()) {
       
-      var days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-      var hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      var minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-      var seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-      return { days, hours, minutes, seconds };
+        // Calculate time remaining until the end of the holidays
+        timeRemaining = endDate.getTime() - startDate.getTime();
+    } else {
+        // Calculate time remaining until the end of the holidays in the next year
+        endDate.setFullYear(endDate.getFullYear() + 1);
+        timeRemaining = endDate.getTime() - startDate.getTime();
     }
+    
+    var days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+    return { days, hours, minutes, seconds };
+}
 
     // Function to create countdown element
     function createCountdownElement(date, timeRemaining) {
