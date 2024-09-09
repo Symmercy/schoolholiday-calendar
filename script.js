@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Array of school holiday dates (format: 'Day Month Year' in Croatian)
   var holidayDates = [
-    { start: '1. Studenog 2024', end: '1. Studenog 2024' },
     { start: '18. Studenog 2024', end: '18. Studenog 2024' },
     { start: '31. Listopada 2024', end: '3. Studenog 2024' },
     { start: '23. Prosinca 2024', end: '7. Siječnja 2025' },
