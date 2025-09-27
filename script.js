@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
     { start: '30. Ožujka 2026', end: '7. Travnja 2026' },
     { start: '17. Travnja 2026', end: '28. Travnja 2026' },
     { start: '1. Svibnja 2026', end: '1. Svibnja 2026' },
-    { start: '4. Lipnja 2025', end: '4. Lipnja 2025' }
+    { start: '4. Lipnja 2026', end: '4. Lipnja 2026' }
   ];
 
   var countdownContainer = document.getElementById('countdown-container');
