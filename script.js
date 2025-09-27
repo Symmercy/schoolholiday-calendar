@@ -20,14 +20,13 @@ document.addEventListener('DOMContentLoaded', function () {
     { start: '18. Studenog 2025', end: '18. Studenog 2025' },
     { start: '24. Prosinca 2025', end: '12. Siječnja 2026' },
     { start: '30. Ožujka 2026', end: '7. Travnja 2026' },
-    { start: '17. Travnja 2026', end: '28. Travnja 2026' },
     { start: '1. Svibnja 2026', end: '1. Svibnja 2026' },
     { start: '4. Lipnja 2026', end: '4. Lipnja 2026' }
   ];
 
   var countdownContainer = document.getElementById('countdown-container');
   var header = document.createElement('h1');
-  header.textContent = '2023/2024 Školska godina Countdown Timer';
+  header.textContent = '2025/2026 Školska godina Countdown Timer';
   countdownContainer.appendChild(header);
 
   var themeSwitcher = document.getElementById('theme-switcher');
