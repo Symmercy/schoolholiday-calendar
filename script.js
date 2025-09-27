@@ -17,12 +17,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Array of school holiday dates (format: 'Day Month Year' in Croatian)
   var holidayDates = [
-    { start: '18. Studenog 2024', end: '18. Studenog 2024' },
-    { start: '31. Listopada 2024', end: '3. Studenog 2024' },
-    { start: '23. Prosinca 2024', end: '7. Siječnja 2025' },
-    { start: '17. Travnja 2025', end: '28. Travnja 2025' },
-    { start: '1. Svibnja 2025', end: '1. Svibnja 2025' },
-    { start: '30. Svibnja 2025', end: '30. Svibnja 2025' }
+    { start: '18. Studenog 2025', end: '18. Studenog 2025' },
+    { start: '24. Prosinca 2025', end: '12. Siječnja 2026' },
+    { start: '30. Ožujka 2026', end: '7. Travnja 2026' },
+    { start: '17. Travnja 2026', end: '28. Travnja 2026' },
+    { start: '1. Svibnja 2026', end: '1. Svibnja 2026' },
+    { start: '4. Lipnja 2025', end: '4. Lipnja 2025' }
   ];
 
   var countdownContainer = document.getElementById('countdown-container');
